@@ -40,6 +40,29 @@ Garagi.prototype.renderItems=function(){
 
     total.textContent= ' the total is =' + calculateTotal();
 
+    var deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'x';
+        GaragiRow.appendChild(deleteBtn);
+    
+        deleteBtn.addEventListener('click', deleteTask);
+        function deleteTask(){
+
+                itemName.innerHTML = '';
+                carYear.innerHTML = '';
+                manufacturer.innerHTML = '';
+                price.innerHTML = '';
+
+                localStorage.removeItem('garagilist');
+
+                
+            
+
+
+
+
+    }
+
+
 
 
 
@@ -91,12 +114,11 @@ function renderList(){
 
         total.textContent= ' the total is =' , calculateTotal();
 
+       
+        
 
 
-
-    }
-
-
+}
 }
 
 function generateRandom(){
@@ -141,12 +163,12 @@ function submitData(event){
 
 
 function checkLS() {
-    if (localStorage.getItem('garagilist')) { // checking if the LS has the key wishlistItems
+    if (localStorage.getItem('garagilist')) { 
         var lsObj = JSON.parse(localStorage.getItem('garagilist'));
-       // recreate the objects and re-render the data
+       
         for (let index = 0; index < lsObj.length; index++) {
             var newWishListObject = new Garagi(lsObj[index].carName, lsObj[index].carYear, lsObj[index].manufacturer) // create a new obj            
-            newWishListObject.renderItems() // use the same prototype function to re-render
+            newWishListObject.renderItems() 
         }
     }
 }

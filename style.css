@@ -1,1 +1,74 @@
 
+main{
+    width: 100%;
+    display: inline-block;
+}
+
+header{
+    background-color: bisque;
+    text-align: center;
+    padding: 5px;
+
+    margin-bottom: 40px;
+    height: 50px;
+}
+
+header h1{
+    font-size: larger;
+
+
+}
+
+#ourForm{
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    border: solid;
+}
+
+#car-model , #model-year , #manufacturer{
+    border: aqua solid;
+
+
+}
+
+th,td{
+    border: 4px darkgoldenrod solid;
+    padding: 5px;
+}
+
+
+
+#form{
+    float: left;
+    display: inline;
+    padding-top: 30px;
+    padding-left: 40px;
+    
+}
+#table{
+    float: right;
+    display: inline;
+    padding-top: 30px;
+    padding-right: 40px;
+    
+
+
+}
+
+#parrentTable{
+    text-align: center;
+    font-size: larger;
+    border: brown solid;
+    margin: auto;
+
+
+}
+
+td{
+    border: 4px darkgoldenrod solid;
+    padding: 5px;
+}
+
+
+

@@ -17,7 +17,7 @@ function Garagi(carNmae,carYear,manufacturer){
 
 }
 
-Garagi.prototype.renderItems=function(){
+/*Garagi.prototype.renderItems=function(){
     var GaragiRow = document.createElement('tr');
 
     var itemName= document.createElement('td');
@@ -40,36 +40,8 @@ Garagi.prototype.renderItems=function(){
 
     total.textContent= ' the total is =' + calculateTotal();
 
-    var deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'x';
-        GaragiRow.appendChild(deleteBtn);
-    
-        deleteBtn.addEventListener('click', deleteTask);
-        function deleteTask(){
 
-                itemName.innerHTML = '';
-                carYear.innerHTML = '';
-                manufacturer.innerHTML = '';
-                price.innerHTML = '';
-
-                localStorage.removeItem('garagilist');
-
-                
-            
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-}
+}*/
 
 function renderHeader(){
 
@@ -90,6 +62,8 @@ function renderHeader(){
 }
 
 function renderList(){
+
+    renderHeader();
     for (let index = 0; index < garagiArray.length; index++) {
 
         var GaragiRow = document.createElement('tr');
@@ -110,13 +84,18 @@ function renderList(){
         price.textContent=garagiArray[index].price;
         GaragiRow.appendChild(price);
     
+
+
+        var animeTableRowRemoveBtn = document.createElement('button');
+        animeTableRowRemoveBtn.textContent = 'X';
+        animeTableRowRemoveBtn.setAttribute('id', index);
+    
+        animeTableRowRemoveBtn.addEventListener('click', deleteAnimeFromList);
+        GaragiRow.appendChild(animeTableRowRemoveBtn)
+    
         ourParentTable.appendChild(GaragiRow);
 
-        total.textContent= ' the total is =' , calculateTotal();
-
-       
-        
-
+        total.textContent= ' the total is =' + calculateTotal();
 
 }
 }
@@ -147,22 +126,36 @@ function submitData(event){
 
     var newItems = new Garagi(carName,modelYear,manufacturer)
 
-    newItems.renderItems();
+    
 
     localStorage.setItem('garagilist',JSON.stringify(garagiArray));
+    var animeTable = document.getElementById('parrentTable');
+    animeTable.innerHTML = '';
+    renderList();
+    var addAnimeForm = document.getElementById('ourForm');
+    addAnimeForm.reset();
 
 
 }
 
-/*function checkList(){
+function checkList(){
     if (localStorage.getItem('garagilist')){
         garagiArray=JSON.parse(localStorage.getItem('garagilist'))
         renderList();
     }
-}*/
+}
+
+function deleteAnimeFromList(event){
+    var selectedAnime = event.target.id;
+    garagiArray.splice(selectedAnime, 1);
+    localStorage.setItem('garagilist', JSON.stringify(garagiArray));
+    var animeTable = document.getElementById('parrentTable');
+    animeTable.innerHTML = '';
+    renderList();
+  }
 
 
-function checkLS() {
+/*function checkLS() {
     if (localStorage.getItem('garagilist')) { 
         var lsObj = JSON.parse(localStorage.getItem('garagilist'));
        
@@ -171,21 +164,13 @@ function checkLS() {
             newWishListObject.renderItems() 
         }
     }
-}
+}*/
 
 
 
 
 
-renderHeader();
+
 ourForm.addEventListener('submit',submitData);
-checkLS();
-// chekList()
-
-
-
-
-
-
-
-
+//checkLS();
+ checkList()

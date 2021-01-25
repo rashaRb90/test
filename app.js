@@ -2,6 +2,8 @@
 var ourForm = document.getElementById('ourForm');
 var headerContent=['Car Model','Model Year','Manufacturer','Price'];
 var ourParentTable=document.getElementById('parrentTable');
+var total= document.getElementById('total')
+
 var garagiArray=[]
 
 
@@ -9,7 +11,7 @@ function Garagi(carNmae,carYear,manufacturer){
     this.carName=carNmae;
     this.carYear=carYear;
     this.manufacturer=manufacturer;
-    this.price=''
+    this.price=generateRandom();
 
     garagiArray.push(this);
 
@@ -35,6 +37,9 @@ Garagi.prototype.renderItems=function(){
     GaragiRow.appendChild(price);
 
     ourParentTable.appendChild(GaragiRow);
+
+    total.textContent= ' the total is =' + calculateTotal();
+
 
 
 
@@ -83,8 +88,30 @@ function renderList(){
         GaragiRow.appendChild(price);
     
         ourParentTable.appendChild(GaragiRow);
+
+        total.textContent= ' the total is =' , calculateTotal();
+
+
+
+
+    }
+
+
+}
+
+function generateRandom(){
+
+    return (Math.floor(Math.random()*(1000-500))+500)
+
+}
+
+function calculateTotal(){
+    var total=0;
+    for (let index = 0; index < garagiArray.length; index++) {
+        total=total+garagiArray[index].price;
         
     }
+    return total;
 }
 
 
@@ -105,19 +132,33 @@ function submitData(event){
 
 }
 
-function checkList(){
+/*function checkList(){
     if (localStorage.getItem('garagilist')){
         garagiArray=JSON.parse(localStorage.getItem('garagilist'))
         renderList();
+    }
+}*/
+
+
+function checkLS() {
+    if (localStorage.getItem('garagilist')) { // checking if the LS has the key wishlistItems
+        var lsObj = JSON.parse(localStorage.getItem('garagilist'));
+       // recreate the objects and re-render the data
+        for (let index = 0; index < lsObj.length; index++) {
+            var newWishListObject = new Garagi(lsObj[index].carName, lsObj[index].carYear, lsObj[index].manufacturer) // create a new obj            
+            newWishListObject.renderItems() // use the same prototype function to re-render
+        }
     }
 }
 
 
 
 
+
 renderHeader();
 ourForm.addEventListener('submit',submitData);
-checkList();
+checkLS();
+// chekList()
 
 
 
